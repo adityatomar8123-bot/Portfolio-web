@@ -6,8 +6,8 @@
   --color-background: #030712; /* Gray 950 */
   --color-foreground: #f9fafb; /* Gray 50 */
   
-  --font-sans: var(--font-inter);
-  --font-heading: var(--font-space-grotesk);
+  --font-sans: var(--font-outfit);
+  --font-heading: var(--font-syne);
 
   --animate-blob: blob 7s infinite;
 }
@@ -23,6 +23,12 @@ body {
   font-family: var(--font-sans), sans-serif;
   scroll-behavior: smooth;
   overflow-x: hidden;
+}
+
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
 }
 
 /* Removed the cinematic noise filter to ensure a pure black background */

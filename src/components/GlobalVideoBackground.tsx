@@ -42,7 +42,7 @@ export default function GlobalVideoBackground() {
         // Draw using 'contain' logic to prevent cutting the video
         const canvasRatio = canvas.width / canvas.height;
         const imgRatio = img.width / img.height;
-        let drawWidth, drawHeight, offsetX, offsetY;
+        let drawWidth, drawHeight;
 
         // Use "cover" logic to ensure there are NEVER any black borders/empty spaces
         if (canvasRatio > imgRatio) {
@@ -61,8 +61,8 @@ export default function GlobalVideoBackground() {
         drawHeight *= zoomFactor;
 
         // Center the image (this will natively crop the overlapping edges)
-        offsetX = (canvas.width - drawWidth) / 2;
-        offsetY = (canvas.height - drawHeight) / 2;
+        const offsetX = (canvas.width - drawWidth) / 2;
+        const offsetY = (canvas.height - drawHeight) / 2;
 
         // Fill background with black to avoid empty spaces
         ctx.fillStyle = "black";

@@ -67,28 +67,35 @@ export default function Navbar() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={{
+              hidden: { opacity: 0, y: -20 },
+              visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.05 } }
+            }}
             className="absolute top-full left-0 w-full glass border-t border-white/10 p-6 flex flex-col gap-4 shadow-xl"
           >
             {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-lg font-medium text-white/80 hover:text-brand transition-colors"
-              >
-                {link.name}
-              </Link>
+              <motion.div key={link.name} variants={{ hidden: { opacity: 0, x: -10 }, visible: { opacity: 1, x: 0 } }}>
+                <Link
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-lg font-medium text-white/80 hover:text-brand transition-colors block"
+                >
+                  {link.name}
+                </Link>
+              </motion.div>
             ))}
-            <Link
-              href="#contact"
-              onClick={() => setMobileMenuOpen(false)}
-              className="mt-4 px-6 py-3 text-center text-sm font-medium bg-brand text-white rounded-full"
-            >
-              Hire Me
-            </Link>
+            <motion.div variants={{ hidden: { opacity: 0, x: -10 }, visible: { opacity: 1, x: 0 } }}>
+              <Link
+                href="#contact"
+                onClick={() => setMobileMenuOpen(false)}
+                className="mt-4 px-6 py-3 text-center text-sm font-medium bg-brand text-white rounded-full block"
+              >
+                Hire Me
+              </Link>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

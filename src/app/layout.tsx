@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Outfit, Syne } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import GlobalVideoBackground from "@/components/GlobalVideoBackground";
+import CustomCursor from "@/components/CustomCursor";
 
-const inter = Inter({
-  variable: "--font-inter",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
 });
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const syne = Syne({
+  variable: "--font-syne",
   subsets: ["latin"],
 });
 
@@ -28,8 +29,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} antialiased min-h-screen flex flex-col selection:bg-brand selection:text-white`}
+        className={`${outfit.variable} ${syne.variable} antialiased min-h-screen flex flex-col selection:bg-brand selection:text-white`}
       >
+        <CustomCursor />
         <GlobalVideoBackground />
         <Navbar />
         <main className="flex-grow pt-24">{children}</main>
