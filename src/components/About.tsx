@@ -44,7 +44,7 @@ export default function About() {
   }, []);
 
   return (
-    <section id="about" ref={sectionRef} style={{ padding: '10rem 0', position: 'relative' }}>
+    <section id="about" ref={sectionRef} style={{ padding: '5rem 0', position: 'relative' }}>
       {/* Section label */}
       <div className="container">
         <div className="reveal" style={{ marginBottom: '5rem', display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
@@ -66,12 +66,13 @@ export default function About() {
             <h2 className="reveal" style={{
               fontSize: 'clamp(2.5rem, 5vw, 4rem)', marginBottom: '2rem',
               lineHeight: 1.1, letterSpacing: '-0.02em',
+              fontWeight: 700, textTransform: 'uppercase'
             }}>
-              Turning ideas<br />
+              TURNING IDEAS<br />
               <span style={{
                 background: 'linear-gradient(135deg, var(--gold), var(--accent))',
                 WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-              }}>into pixels.</span>
+              }}>INTO PIXELS.</span>
             </h2>
 
             <p className="reveal reveal-delay-1" style={{ color: 'var(--text2)', lineHeight: 1.9, marginBottom: '1.5rem', fontSize: '1.1rem' }}>

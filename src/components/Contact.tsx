@@ -63,7 +63,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" ref={sectionRef} style={{ padding: '10rem 0', position: 'relative' }}>
+    <section id="contact" ref={sectionRef} style={{ padding: '5rem 0', position: 'relative' }}>
       {/* Big ambient glow */}
       <div style={{
         position: 'absolute', top: '30%', left: '50%',
@@ -93,12 +93,13 @@ export default function Contact() {
             <h2 className="reveal" style={{
               fontSize: 'clamp(2.5rem, 5vw, 4rem)', marginBottom: '1.5rem',
               letterSpacing: '-0.02em', lineHeight: 1.1,
+              fontWeight: 700, textTransform: 'uppercase'
             }}>
-              Let's build<br />
+              LET'S BUILD<br />
               <span style={{
                 background: 'linear-gradient(135deg, var(--gold), var(--accent))',
                 WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-              }}>something great.</span>
+              }}>SOMETHING GREAT.</span>
             </h2>
 
             <p className="reveal reveal-delay-1" style={{ color: 'var(--text2)', lineHeight: 1.9, marginBottom: '3rem', fontSize: '1.1rem' }}>

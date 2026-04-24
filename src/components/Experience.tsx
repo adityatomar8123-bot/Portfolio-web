@@ -52,7 +52,7 @@ export default function Experience() {
   }, []);
 
   return (
-    <section id="experience" ref={sectionRef} style={{ padding: '10rem 0', position: 'relative' }}>
+    <section id="experience" ref={sectionRef} style={{ padding: '5rem 0', position: 'relative' }}>
       <div className="container">
         <div className="reveal" style={{ marginBottom: '5rem', display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
           <span style={{ fontFamily: 'var(--font-display)', fontSize: '0.7rem', letterSpacing: '0.3em', color: 'var(--gold)', textTransform: 'uppercase' }}>03 — Experience</span>
@@ -62,12 +62,13 @@ export default function Experience() {
         <h2 className="reveal" style={{
           fontSize: 'clamp(2.5rem, 5vw, 4rem)', marginBottom: '5rem',
           letterSpacing: '-0.02em', maxWidth: '500px',
+          fontWeight: 700, textTransform: 'uppercase'
         }}>
-          The journey<br />
+          THE JOURNEY<br />
           <span style={{
             background: 'linear-gradient(135deg, var(--gold), var(--accent))',
             WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-          }}>so far.</span>
+          }}>SO FAR.</span>
         </h2>
 
         {/* Timeline — clean, no dots */}
@@ -139,17 +140,17 @@ export default function Experience() {
           <h3 className="reveal" style={{
             fontFamily: 'var(--font-display)',
             fontSize: 'clamp(1.5rem, 3vw, 2.2rem)',
-            fontWeight: 700,
+            fontWeight: 700, textTransform: 'uppercase',
             marginBottom: '3rem',
             display: 'flex', alignItems: 'center', gap: '1rem',
           }}>
             <span style={{ fontSize: '1.5rem' }}>🏆</span>
             <span>
-              Battle{' '}
+              BATTLE{' '}
               <span style={{
                 background: 'linear-gradient(135deg, #f59e0b, #ef4444)',
                 WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-              }}>Scars</span>
+              }}>SCARS</span>
             </span>
           </h3>
 

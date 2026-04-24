@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 const techTags = [
   { name: 'React', icon: '⚛', color: '#61dafb' },
   { name: 'TS', icon: '𝗧𝗦', color: '#3178c6' },
@@ -35,13 +37,19 @@ export default function FlipCard() {
           <div style={{ display: 'flex', gap: '1.2rem', alignItems: 'center', marginBottom: '1rem' }}>
             <div style={{
               width: '80px', height: '80px', borderRadius: '50%',
-              background: 'linear-gradient(135deg, #1a1a2e, #2d2d44)',
               border: '2px solid rgba(255,255,255,0.1)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '2.5rem', flexShrink: 0,
+              flexShrink: 0,
               boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
+              overflow: 'hidden',
+              position: 'relative'
             }}>
-              👨‍💻
+              <Image 
+                src="/The%20day%20feels%20too%20long...%23hamster.jpg" 
+                alt="Profile" 
+                fill
+                style={{ objectFit: 'cover' }}
+                priority
+              />
             </div>
             <div>
               <div style={{

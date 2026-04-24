@@ -88,13 +88,14 @@ export default function Hero() {
 
             {/* Main heading */}
             <h1 style={{
-              fontSize: 'clamp(3rem, 7vw, 6rem)', lineHeight: 0.88,
+              fontSize: 'clamp(3rem, 7vw, 6rem)', lineHeight: 0.75,
+              fontWeight: 900, textTransform: 'uppercase',
               marginBottom: '1.2rem', letterSpacing: '-0.04em',
               opacity: visible ? 1 : 0,
               transform: visible ? 'none' : 'translateY(40px)',
               transition: 'all 0.9s cubic-bezier(0.16,1,0.3,1) 0.2s',
             }}>
-              <span style={{ display: 'block', color: 'var(--text)' }}>Crafting</span>
+              <span style={{ display: 'block', color: 'var(--text)' }}>CRAFTING</span>
               <span style={{
                 display: 'block',
                 background: 'linear-gradient(135deg, var(--gold) 0%, var(--gold2) 40%, var(--accent) 100%)',
@@ -102,8 +103,8 @@ export default function Hero() {
                 backgroundClip: 'text',
                 backgroundSize: '200% auto',
                 animation: 'shimmer 4s linear infinite',
-              }}>Digital</span>
-              <span style={{ display: 'block', color: 'var(--text)' }}>Experiences</span>
+              }}>DIGITAL</span>
+              <span style={{ display: 'block', color: 'var(--text)' }}>EXPERIENCES</span>
             </h1>
 
             {/* Role typewriter */}
@@ -135,8 +136,7 @@ export default function Hero() {
               transform: visible ? 'none' : 'translateY(20px)',
               transition: 'all 0.8s cubic-bezier(0.16,1,0.3,1) 0.5s',
             }}>
-              Building performant, visually stunning web applications
-              with a passion for clean architecture and delightful UX.
+              Building smart solutions from scratch, breaking problems into code that just hits right — clean, logical, and kinda satisfying ngl.
             </p>
 
             {/* CTAs */}

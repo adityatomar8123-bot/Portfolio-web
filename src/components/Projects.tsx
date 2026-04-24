@@ -143,7 +143,7 @@ export default function Projects() {
   }, []);
 
   return (
-    <section id="projects" ref={sectionRef} style={{ padding: '10rem 0', position: 'relative' }}>
+    <section id="projects" ref={sectionRef} style={{ padding: '5rem 0', position: 'relative' }}>
       <div className="container">
         <div className="reveal" style={{ marginBottom: '5rem', display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
           <span style={{ fontFamily: 'var(--font-display)', fontSize: '0.7rem', letterSpacing: '0.3em', color: 'var(--gold)', textTransform: 'uppercase' }}>02 — Projects</span>
@@ -153,12 +153,13 @@ export default function Projects() {
         <h2 className="reveal" style={{
           fontSize: 'clamp(2.5rem, 5vw, 4rem)', marginBottom: '4rem',
           letterSpacing: '-0.02em',
+          fontWeight: 700, textTransform: 'uppercase'
         }}>
-          Selected<br />
+          DEV DROP<br />
           <span style={{
             background: 'linear-gradient(135deg, var(--gold), var(--accent))',
             WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
-          }}>work.</span>
+          }}>WORK.</span>
         </h2>
 
         <div className="reveal reveal-delay-1" style={{
