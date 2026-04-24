@@ -1,104 +1,96 @@
-"use client";
+'use client';
+import { useState, useEffect } from 'react';
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import { Menu, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+const links = [
+  { label: 'About', href: '#about' },
+  { label: 'Experience', href: '#experience' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Contact', href: '#contact' },
+];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [active, setActive] = useState('');
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 60);
+      const sections = ['about', 'experience', 'projects', 'contact'];
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 120 && rect.bottom >= 120) setActive(id);
+        }
+      });
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const navLinks = [
-    { name: "About", href: "#about" },
-    { name: "Projects", href: "#projects" },
-    { name: "Experience", href: "#experience" },
-    { name: "Contact", href: "#contact" },
-  ];
-
   return (
-    <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? "glass py-4 shadow-lg shadow-black/20" : "bg-transparent py-6"
-      }`}
-    >
-      <div className="container mx-auto px-6 max-w-5xl flex items-center justify-between">
-        <Link href="/" className="text-xl font-heading font-bold tracking-tight text-white">
-          Dev<span className="text-brand">.</span>
-        </Link>
+    <>
+      <nav style={{
+        position: 'fixed', top: '1.5rem', left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 100,
+        background: scrolled ? 'rgba(10,8,15,0.75)' : 'rgba(10,8,15,0.35)',
+        backdropFilter: 'blur(24px) saturate(1.4)',
+        WebkitBackdropFilter: 'blur(24px) saturate(1.4)',
+        border: `1px solid ${scrolled ? 'rgba(167,139,250,0.2)' : 'rgba(255,255,255,0.06)'}`,
+        borderRadius: '60px',
+        padding: '0.75rem 2rem',
+        display: 'flex', alignItems: 'center', gap: '3rem',
+        transition: 'all 0.4s cubic-bezier(0.16,1,0.3,1)',
+        boxShadow: scrolled ? '0 8px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)' : 'inset 0 1px 0 rgba(255,255,255,0.04)',
+        minWidth: '600px',
+      }}>
+        <a href="#hero" style={{
+          fontFamily: 'var(--font-display)', fontWeight: 800,
+          fontSize: '1.1rem', letterSpacing: '0.05em',
+          background: 'linear-gradient(135deg, var(--gold), var(--gold2))',
+          WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text', whiteSpace: 'nowrap',
+        }}>AT</a>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex gap-8 items-center">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              className="text-sm font-medium text-white/70 hover:text-white transition-colors"
-            >
-              {link.name}
-            </Link>
-          ))}
-          <Link
-            href="#contact"
-            className="px-4 py-2 text-sm font-medium bg-white/10 hover:bg-white/20 border border-white/10 rounded-full transition-all text-white"
-          >
-            Hire Me
-          </Link>
-        </nav>
+        <div style={{ display: 'flex', gap: '0.25rem', flex: 1, justifyContent: 'center' }}>
+          {links.map(l => {
+            const isActive = active === l.href.slice(1);
+            return (
+              <a key={l.href} href={l.href} style={{
+                padding: '0.4rem 1.1rem', borderRadius: '30px', fontSize: '0.85rem',
+                letterSpacing: '0.04em', fontWeight: 500, fontFamily: 'var(--font-display)',
+                color: isActive ? 'var(--bg)' : 'var(--text2)',
+                background: isActive ? 'var(--gold)' : 'transparent',
+                transition: 'all 0.25s', position: 'relative',
+              }}
+                onMouseEnter={e => { if (!isActive) (e.target as HTMLElement).style.color = 'var(--text)'; }}
+                onMouseLeave={e => { if (!isActive) (e.target as HTMLElement).style.color = 'var(--text2)'; }}
+              >{l.label}</a>
+            );
+          })}
+        </div>
 
-        {/* Mobile Nav Toggle */}
-        <button
-          className="md:hidden text-white p-2"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-
-      {/* Mobile Nav Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            variants={{
-              hidden: { opacity: 0, y: -20 },
-              visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.05 } }
-            }}
-            className="absolute top-full left-0 w-full glass border-t border-white/10 p-6 flex flex-col gap-4 shadow-xl"
-          >
-            {navLinks.map((link) => (
-              <motion.div key={link.name} variants={{ hidden: { opacity: 0, x: -10 }, visible: { opacity: 1, x: 0 } }}>
-                <Link
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-lg font-medium text-white/80 hover:text-brand transition-colors block"
-                >
-                  {link.name}
-                </Link>
-              </motion.div>
-            ))}
-            <motion.div variants={{ hidden: { opacity: 0, x: -10 }, visible: { opacity: 1, x: 0 } }}>
-              <Link
-                href="#contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="mt-4 px-6 py-3 text-center text-sm font-medium bg-brand text-white rounded-full block"
-              >
-                Hire Me
-              </Link>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
+        <a href="#contact" style={{
+          padding: '0.4rem 1.2rem', borderRadius: '30px', fontSize: '0.8rem',
+          fontFamily: 'var(--font-display)', fontWeight: 600, letterSpacing: '0.06em',
+          border: '1px solid rgba(232,184,75,0.4)',
+          color: 'var(--gold)',
+          transition: 'all 0.25s', whiteSpace: 'nowrap',
+        }}
+          onMouseEnter={e => {
+            const el = e.currentTarget as HTMLElement;
+            el.style.background = 'var(--gold)';
+            el.style.color = 'var(--bg)';
+          }}
+          onMouseLeave={e => {
+            const el = e.currentTarget as HTMLElement;
+            el.style.background = 'transparent';
+            el.style.color = 'var(--gold)';
+          }}
+        >Hire me →</a>
+      </nav>
+    </>
   );
 }

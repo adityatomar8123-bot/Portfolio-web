@@ -1,81 +1,118 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+'use client';
+import { useEffect, useRef } from 'react';
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const dotRef = useRef<HTMLDivElement>(null);
+  const trailsRef = useRef<HTMLDivElement[]>([]);
+  const posRef = useRef({ x: -100, y: -100 });
+  const dotPosRef = useRef({ x: -100, y: -100 });
 
   useEffect(() => {
-    // Only show on desktop devices with fine pointers
-    if (window.matchMedia("(pointer: coarse)").matches) return;
-    
-    setIsVisible(true);
+    const cursor = cursorRef.current;
+    const dot = dotRef.current;
+    if (!cursor || !dot) return;
 
-    const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+    let animId: number;
+    let isHovering = false;
+    let isClicking = false;
+
+    const onMove = (e: MouseEvent) => {
+      posRef.current = { x: e.clientX, y: e.clientY };
+      dot.style.left = e.clientX + 'px';
+      dot.style.top = e.clientY + 'px';
     };
 
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      // Check if hovering over interactive elements
-      if (
-        target.tagName.toLowerCase() === "a" ||
-        target.tagName.toLowerCase() === "button" ||
-        target.closest("a") ||
-        target.closest("button")
-      ) {
-        setIsHovering(true);
-      } else {
-        setIsHovering(false);
-      }
+    const onEnter = () => {
+      isHovering = true;
+      cursor.style.width = '56px';
+      cursor.style.height = '56px';
+      cursor.style.borderColor = '#c084fc';
+      cursor.style.background = 'rgba(167,139,250,0.12)';
+      cursor.style.boxShadow = '0 0 20px rgba(167,139,250,0.3)';
     };
 
-    window.addEventListener("mousemove", updateMousePosition);
-    window.addEventListener("mouseover", handleMouseOver);
+    const onLeave = () => {
+      isHovering = false;
+      cursor.style.width = '32px';
+      cursor.style.height = '32px';
+      cursor.style.borderColor = 'rgba(167,139,250,0.5)';
+      cursor.style.background = 'transparent';
+      cursor.style.boxShadow = 'none';
+    };
+
+    const onDown = () => {
+      isClicking = true;
+      cursor.style.transform = 'translate(-50%, -50%) scale(0.8)';
+      cursor.style.borderColor = '#e879f9';
+    };
+
+    const onUp = () => {
+      isClicking = false;
+      cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+      cursor.style.borderColor = 'rgba(167,139,250,0.5)';
+    };
+
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+    const animate = () => {
+      dotPosRef.current.x = lerp(dotPosRef.current.x, posRef.current.x, 0.12);
+      dotPosRef.current.y = lerp(dotPosRef.current.y, posRef.current.y, 0.12);
+      cursor.style.left = dotPosRef.current.x + 'px';
+      cursor.style.top = dotPosRef.current.y + 'px';
+      animId = requestAnimationFrame(animate);
+    };
+
+    animId = requestAnimationFrame(animate);
+
+    // Use MutationObserver to handle dynamically-added elements
+    const attachListeners = () => {
+      const interactives = document.querySelectorAll('a, button, [data-cursor]');
+      interactives.forEach(el => {
+        el.addEventListener('mouseenter', onEnter);
+        el.addEventListener('mouseleave', onLeave);
+      });
+    };
+    attachListeners();
+
+    const observer = new MutationObserver(() => attachListeners());
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mousedown', onDown);
+    window.addEventListener('mouseup', onUp);
 
     return () => {
-      window.removeEventListener("mousemove", updateMousePosition);
-      window.removeEventListener("mouseover", handleMouseOver);
+      cancelAnimationFrame(animId);
+      observer.disconnect();
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mousedown', onDown);
+      window.removeEventListener('mouseup', onUp);
     };
   }, []);
 
-  if (!isVisible) return null;
-
   return (
     <>
-      <motion.div
-        className="fixed top-0 left-0 w-3 h-3 bg-brand rounded-full pointer-events-none z-[9999] mix-blend-screen"
-        animate={{
-          x: mousePosition.x - 6,
-          y: mousePosition.y - 6,
-          scale: isHovering ? 3 : 1,
-          backgroundColor: isHovering ? "#ffffff" : "#0ea5e9"
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 800,
-          damping: 35,
-          mass: 0.5
-        }}
-      />
-      <motion.div
-        className="fixed top-0 left-0 w-8 h-8 border border-brand/60 rounded-full pointer-events-none z-[9998]"
-        animate={{
-          x: mousePosition.x - 16,
-          y: mousePosition.y - 16,
-          scale: isHovering ? 1.5 : 1,
-          opacity: isHovering ? 0 : 1,
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 400,
-          damping: 25,
-          mass: 0.8
-        }}
-      />
+      {/* Outer ring — violet/purple */}
+      <div ref={cursorRef} style={{
+        position: 'fixed', pointerEvents: 'none', zIndex: 9999,
+        width: '32px', height: '32px', borderRadius: '50%',
+        border: '1.5px solid rgba(167,139,250,0.5)',
+        transform: 'translate(-50%, -50%)',
+        transition: 'width 0.3s, height 0.3s, border-color 0.3s, background 0.3s, box-shadow 0.3s',
+        mixBlendMode: 'difference',
+        left: '-100px', top: '-100px',
+      }} />
+      {/* Center dot — bright violet */}
+      <div ref={dotRef} style={{
+        position: 'fixed', pointerEvents: 'none', zIndex: 10000,
+        width: '5px', height: '5px', borderRadius: '50%',
+        background: '#a78bfa',
+        boxShadow: '0 0 8px rgba(167,139,250,0.6)',
+        transform: 'translate(-50%, -50%)',
+        left: '-100px', top: '-100px',
+        transition: 'transform 0.1s',
+      }} />
     </>
   );
 }

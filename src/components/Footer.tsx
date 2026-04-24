@@ -1,25 +1,33 @@
-import Link from "next/link";
-import { Code, Briefcase, Mail } from "lucide-react";
+'use client';
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/10 py-8 mt-20">
-      <div className="container mx-auto px-6 max-w-5xl flex flex-col md:flex-row justify-between items-center gap-4">
-        <div className="text-white/60 text-sm">
-          © {new Date().getFullYear()} Aditya Pratap Singh Tomar. All rights reserved.
+    <footer style={{
+      padding: '3rem 0', borderTop: '1px solid var(--border)',
+      position: 'relative', zIndex: 1,
+    }}>
+      <div className="container" style={{
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        flexWrap: 'wrap', gap: '1rem',
+      }}>
+        <div>
+          <span style={{
+            fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '1.1rem',
+            background: 'linear-gradient(135deg, var(--gold), var(--gold2))',
+            WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+          }}>Aditya Tomar</span>
         </div>
-        
-        <div className="flex gap-4">
-          <Link href="https://github.com/adityatomar8123-bot" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-brand transition-colors">
-            <Code size={20} />
-          </Link>
-          <Link href="https://www.linkedin.com/in/aditya-pratap-singh-tomar-2b35193a6/" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-brand transition-colors">
-            <Briefcase size={20} />
-          </Link>
-          <Link href="https://mail.google.com/mail/?view=cm&fs=1&to=adityatomar8123@gmail.com" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-brand transition-colors">
-            <Mail size={20} />
-          </Link>
-        </div>
+        <p style={{ fontSize: '0.82rem', color: 'var(--text3)', fontFamily: 'var(--font-display)' }}>
+          Designed & built with ♥ in Next.js — {new Date().getFullYear()}
+        </p>
+        <a href="#hero" style={{
+          fontSize: '0.82rem', color: 'var(--text3)', fontFamily: 'var(--font-display)',
+          letterSpacing: '0.06em', transition: 'color 0.25s',
+        }}
+          onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = 'var(--gold)'}
+          onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = 'var(--text3)'}
+        >Back to top ↑</a>
       </div>
     </footer>
   );

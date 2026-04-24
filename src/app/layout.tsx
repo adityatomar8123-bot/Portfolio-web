@@ -1,40 +1,23 @@
-import type { Metadata } from "next";
-import { Outfit, Syne } from "next/font/google";
-import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import GlobalVideoBackground from "@/components/GlobalVideoBackground";
-import CustomCursor from "@/components/CustomCursor";
-
-const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
-});
-
-const syne = Syne({
-  variable: "--font-syne",
-  subsets: ["latin"],
-});
+import type { Metadata } from 'next';
+import './globals.css';
+import ScrollVideoBackground from '@/components/ScrollVideoBackground';
+import CustomCursor from '@/components/CustomCursor';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: "Portfolio | Software Developer",
-  description: "Modern personal portfolio showcasing projects, skills, and experience.",
+  title: 'Aditya Tomar — Full Stack Developer',
+  description: 'Full Stack Developer crafting performant, visually stunning web experiences.',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body
-        className={`${outfit.variable} ${syne.variable} antialiased min-h-screen flex flex-col selection:bg-brand selection:text-white`}
-      >
+      <body className="min-h-screen bg-black text-white selection:bg-brand selection:text-white">
         <CustomCursor />
-        <GlobalVideoBackground />
+        <ScrollVideoBackground />
         <Navbar />
-        <main className="flex-grow pt-24">{children}</main>
+        <main className="relative z-10 pt-24">{children}</main>
         <Footer />
       </body>
     </html>
